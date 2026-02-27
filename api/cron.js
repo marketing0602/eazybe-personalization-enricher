@@ -7,8 +7,8 @@ module.exports = async (req, res) => {
     try {
         console.log('Cron job started. Checking for new leads...');
 
-        // Fetch all contacts created in the last 30 minutes
-        const createdAfter = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+        // Fetch all contacts created in the last 65 minutes (1 hour + 5 mins buffer)
+        const createdAfter = new Date(Date.now() - 65 * 60 * 1000).toISOString();
 
         const propertiesToFetch = [...config.HUBSPOT_PROPERTIES_TO_FETCH];
 
