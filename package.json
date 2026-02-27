@@ -1,0 +1,17 @@
+{
+  "name": "apollo-hubspot-enrichment",
+  "version": "1.0.0",
+  "description": "Enrich HubSpot leads with Apollo API data",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dry-run": "node src/index.js --dry-run",
+    "test": "node src/index.js --dry-run --limit 5"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "express": "^5.2.1"
+  }
+}
