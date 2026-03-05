@@ -170,11 +170,21 @@ async function enrichContact(contact, { dryRun = false, skipPersonalization = fa
     let apolloData = null;
 
     if (fieldsNeeded.length > 0) {
-        try {
-            apolloData = await enrichPerson(contact);
-        } catch (err) {
-            logger.error(`  ❌ ${name} — Apollo enrichment failed: ${err.message}`);
-            // Don't bail — we can still try personalization with existing data
+        // OPTIMIZATION: Apollo requires either an email or a LinkedIn URL to find a person.
+        // If the lead only has a phone number and name, an Apollo search will waste a credit 
+        // and return nothing. Skip Apollo entirely to save credits.
+        const hasEmail = !!props.email;
+        const hasLinkedIn = !!props.hs_linkedin_url;
+
+        if (!hasEmail && !hasLinkedIn) {
+            logger.warn(`  🚫 ${name} — Skipping Apollo (No Email or LinkedIn URL provided by HubSpot)`);
+        } else {
+            try {
+                apolloData = await enrichPerson(contact);
+            } catch (err) {
+                logger.error(`  ❌ ${name} — Apollo enrichment failed: ${err.message}`);
+                // Don't bail — we can still try personalization with existing data
+            }
         }
 
         if (apolloData) {
