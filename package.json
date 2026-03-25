@@ -4,7 +4,8 @@
   "description": "Enrich HubSpot leads with Apollo API data",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/daemon.js",
+    "batch": "node src/index.js",
     "dry-run": "node src/index.js --dry-run",
     "test": "node src/index.js --dry-run --limit 5"
   },
